@@ -38,6 +38,7 @@ public class AccountantApp extends Application {
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
 
+        primaryStage.setTitle("Информация о сотрудниках");
         primaryStage.setScene(scene);
         context.publishEvent(new StageReadyEvent(primaryStage));
         primaryStage.show();
