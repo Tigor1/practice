@@ -9,13 +9,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.stankin.practice.entity.Person;
+import ru.stankin.practice.service.ExcelService;
 import ru.stankin.practice.service.PersonService;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
 public class AppController {
-
+    @Autowired
+    private ExcelService excelService;
     @Autowired
     private PersonService personService;
 
@@ -46,6 +49,25 @@ public class AppController {
     @FXML
     private TableColumn<String, Person> clmn5;
 
+    @FXML
+    public void testExcelClick() {
+        clmn1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        clmn2.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        clmn3.setCellValueFactory(new PropertyValueFactory<>("middlename"));
+        clmn4.setCellValueFactory(new PropertyValueFactory<>("number"));
+        clmn5.setCellValueFactory(new PropertyValueFactory<>("profession"));
+
+        try {
+            personsTable.getItems().addAll(excelService.readPerson());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+//    @FXML
+//    public void testExcelClick() {
+//
+//    }
 
     @FXML
     public void acceptAction() {
