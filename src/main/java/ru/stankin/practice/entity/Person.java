@@ -3,11 +3,8 @@ package ru.stankin.practice.entity;
 import lombok.*;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -26,4 +23,22 @@ public class Person {
     private String middlename;
     private String profession;
     private String number;
+
+    private int workDays;
+    private Double hoursDays;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "type_days",
+            joinColumns = @JoinColumn(name = "person_id")
+    )
+    private List<String> typeDays;
+
+
+    @ElementCollection
+    @CollectionTable(
+            name = "hours_days",
+            joinColumns = @JoinColumn(name = "person_id")
+    )
+    private List<String> amountHoursInDay;
 }

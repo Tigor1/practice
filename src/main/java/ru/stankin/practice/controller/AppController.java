@@ -13,6 +13,7 @@ import ru.stankin.practice.service.ExcelService;
 import ru.stankin.practice.service.PersonService;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -50,18 +51,20 @@ public class AppController {
     private TableColumn<String, Person> clmn5;
 
     @FXML
-    public void testExcelClick() {
+    public void testExcelClick() throws IOException {
         clmn1.setCellValueFactory(new PropertyValueFactory<>("name"));
         clmn2.setCellValueFactory(new PropertyValueFactory<>("surname"));
         clmn3.setCellValueFactory(new PropertyValueFactory<>("middlename"));
         clmn4.setCellValueFactory(new PropertyValueFactory<>("number"));
         clmn5.setCellValueFactory(new PropertyValueFactory<>("profession"));
 
-        try {
-            personsTable.getItems().addAll(excelService.readPerson());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//            personsTable.getItems().addAll(excelService.readPerson());
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+
+        excelService.addHeader();
     }
 
 //    @FXML
