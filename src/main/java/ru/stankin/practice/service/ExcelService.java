@@ -87,27 +87,30 @@ public class ExcelService {
         CellReference cr12 = new CellReference("V" + (row.getRowNum() + 1));
 
         for (int i = cr11.getCol(), j = 0; i <= cr12.getCol(); i++, j++) {
-            Cell firstLineCell = row.createCell(cr11.getCol());
+            Cell firstLineCell = row.createCell(cr11.getCol() + j);
             firstLineCell.setCellValue(person.getTypeDays().get(j));
         }
 
         CellReference cr1HalfMonth = new CellReference("W" + (row.getRowNum() + 1));
         Cell halfMonthCell1 = row.createCell(cr1HalfMonth.getCol());
-        halfMonthCell1.setCellValue(person.getTypeDays().stream()
-                                        .reduce(0, (prev, cur) -> {
-                                            if (cur.equals("A")) return prev + 1;
-                                        }, (x, y)->x + y);
+        int hmc = 0;
+        for (int i = 0; i < 15; i++) { if (person.getTypeDays().get(i).equals("Ф")) hmc += 1; }
+        halfMonthCell1.setCellValue(hmc);
 
 
         CellReference cr13 = new CellReference("Z" + (row.getRowNum() + 1));
         CellReference cr14 = new CellReference("AO" + (row.getRowNum() + 1));
 
         for (int i = cr13.getCol(), j = 0; i <= cr14.getCol(); i++, j++) {
-            firstLine.add(getCellValue(sheet.getRow(cr13.getRow()).getCell(cr13.getCol() + j)));
+            Cell firstLineCell = row.createCell(cr13.getCol() + j);
+            firstLineCell.setCellValue(person.getTypeDays().get(j));
         }
 
-        CellReference crTotalMonth = new CellReference("AP" + (row.getRowNum() + 1));
-        firstLineTotal.add(getCellValue(sheet.getRow(crTotalMonth.getRow()).getCell(crTotalMonth.getCol())));
+        CellReference cr1TotalMonth = new CellReference("AP" + (row.getRowNum() + 1));
+        Cell totalMonthCell = row.createCell(cr1HalfMonth.getCol());
+        hmc = 0;
+        for (int i = 15; i < person.getTypeDays().size(); i++) { if (person.getTypeDays().get(i).equals("Ф")) hmc += 1; }
+        totalMonthCell.setCellValue(hmc);
 
 
         //second line
