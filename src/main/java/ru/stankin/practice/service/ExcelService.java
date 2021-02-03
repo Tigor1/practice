@@ -1,12 +1,13 @@
 package ru.stankin.practice.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
 import org.springframework.stereotype.Service;
 import ru.stankin.practice.entity.Person;
+import ru.stankin.practice.utils.Utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,51 +19,59 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ExcelService {
     private final PersonService personService;
-    private int shiftColumn = 13;
+    private int shiftRow = 13;
 
-    public void addHeader() throws IOException {
-        Workbook headerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("header.xls"));
+    public void writeToExcel() throws IOException {
         Workbook resultWorkBook = new HSSFWorkbook();
-
-        Sheet headerSheet = headerWorkbook.getSheetAt(0);
         Sheet resultSheet = resultWorkBook.createSheet("Persons");
+
+        addHeader(resultWorkBook, resultSheet);
+        addPersons(resultSheet);
+        addFooter(resultWorkBook, resultSheet);
+        resultWorkBook.write(new FileOutputStream("result.xls"));
+        resultWorkBook.close();
+        shiftRow = 13;
+    }
+
+    public void addHeader(Workbook resultWorkBook, Sheet resultSheet) throws IOException {
+        Workbook headerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("header.xls"));
+        Sheet headerSheet = headerWorkbook.getSheetAt(0);
 
         Iterator<Row> headerRows = headerSheet.rowIterator();
         for (int i = 0; headerRows.hasNext(); i++) {
             Row headerRow = headerRows.next();
             Iterator<Cell> headerCells = headerRow.cellIterator();
             Row resultRow = resultSheet.createRow(headerRow.getRowNum());
-//            resultRow.setRowStyle(headerRow.getRowStyle());
+// resultRow.setRowStyle(headerRow.getRowStyle());
 
             while (headerCells.hasNext()) {
                 Cell headerCell = headerCells.next();
 
                 Cell resultCell = resultRow.createCell(headerCell.getColumnIndex());
+// resultSheet.removeMergedRegion(headerCell.getColumnIndex());
+                resultSheet.addMergedRegionUnsafe(headerSheet.getMergedRegion(headerCell.getColumnIndex()));
                 setCell(headerCell, resultCell);
-//                resultCell.setCellStyle(headerCell.getCellStyle());
+// copyCellStyle(resultWorkBook, headerCell, resultCell);
+                setCellStyle(resultWorkBook, headerCell, resultCell);
+                resultSheet.setColumnWidth(resultCell.getColumnIndex(), headerSheet.getColumnWidth(headerCell.getColumnIndex()));
+                resultSheet.setDefaultRowHeight(headerSheet.getDefaultRowHeight());
             }
             if (i == 13)
                 break;
         }
-
-        resultWorkBook.write(new FileOutputStream("result.xls"));
     }
 
-    public void addPerson() throws IOException {
-        Workbook resultWorkbook = WorkbookFactory.create(new FileInputStream("result.xls"));
-        Sheet sheet = resultWorkbook.getSheetAt(0);
-
-
-        List<Person> persons = personService.getPersons();
-        for (int i = shiftColumn + 1; i < persons.size(); i++) {
-            Row row = sheet.createRow(shiftColumn + i);
-
-
-
+    public void addPersons(Sheet sheet) throws IOException {
+        List<Person> persons = new ArrayList<>(personService.getPersons());
+        for (int i = shiftRow + 1, j = 0; j < persons.size(); i += 2, j++) {
+            Row row1 = sheet.createRow(i);
+            Row row2 = sheet.createRow(i + 1);
+            setPersonOnRow(row1, row2, persons.get(j), j + 1);
         }
+        shiftRow += (persons.size() * 2);
     }
 
-    public void setPersonOnRow(Row row, Person person, int numPerson) {
+    public void setPersonOnRow(Row row, Row row2, Person person, int numPerson) {
         CellReference cr1 = new CellReference("A" + (row.getRowNum() + 1));
         Cell numCell = row.createCell(cr1.getCol());
         numCell.setCellValue(numPerson);
@@ -73,7 +82,7 @@ public class ExcelService {
 
         CellReference cr3 = new CellReference("C" + (row.getRowNum() + 1));
         Cell fioCell = row.createCell(cr3.getCol());
-        fioCell.setCellValue(person.getSurname() + " " + person.getName() + " " + person.getSurname());
+        fioCell.setCellValue(person.getSurname() + " " + person.getName() + " " + person.getMiddlename());
 
         CellReference cr4 = new CellReference("D" + (row.getRowNum() + 1));
         Cell registrNumCell = row.createCell(cr4.getCol());
@@ -94,75 +103,124 @@ public class ExcelService {
         CellReference cr1HalfMonth = new CellReference("W" + (row.getRowNum() + 1));
         Cell halfMonthCell1 = row.createCell(cr1HalfMonth.getCol());
         int hmc = 0;
-        for (int i = 0; i < 15; i++) { if (person.getTypeDays().get(i).equals("Ф")) hmc += 1; }
-        halfMonthCell1.setCellValue(hmc);
+        for (int i = 0; i < 15; i++) { if
 
+        (person.getTypeDays().get(i).equals("Ф")) hmc += 1; }
+        halfMonthCell1.setCellValue(hmc);
 
         CellReference cr13 = new CellReference("Z" + (row.getRowNum() + 1));
         CellReference cr14 = new CellReference("AO" + (row.getRowNum() + 1));
 
-        for (int i = cr13.getCol(), j = 0; i <= cr14.getCol(); i++, j++) {
-            Cell firstLineCell = row.createCell(cr13.getCol() + j);
+        for (int i = cr13.getCol(), j = 15; i <= cr14.getCol(); i++, j++) {
+            Cell firstLineCell = row.createCell(cr13.getCol() + j - 15);
             firstLineCell.setCellValue(person.getTypeDays().get(j));
         }
 
         CellReference cr1TotalMonth = new CellReference("AP" + (row.getRowNum() + 1));
-        Cell totalMonthCell = row.createCell(cr1HalfMonth.getCol());
-        hmc = 0;
+        Cell totalMonthCell = row.createCell(cr1TotalMonth.getCol());
         for (int i = 15; i < person.getTypeDays().size(); i++) { if (person.getTypeDays().get(i).equals("Ф")) hmc += 1; }
         totalMonthCell.setCellValue(hmc);
 
-
-        //second line
-        CellReference cr21 = new CellReference("H" + (row.getRowNum() + 2));
-        CellReference cr22 = new CellReference("V" + (row.getRowNum() + 2));
+//second line
+        CellReference cr21 = new CellReference("H" + (row2.getRowNum() + 1));
+        CellReference cr22 = new CellReference("V" + (row2.getRowNum() + 1));
 
         for (int i = cr21.getCol(), j = 0; i <= cr22.getCol(); i++, j++) {
-            secondLine.add(getCellValue(sheet.getRow(cr21.getRow()).getCell(cr21.getCol() + j)));
+            Cell secondLineCell = row2.createCell(cr21.getCol() + j);
+            secondLineCell.setCellValue(person.getAmountHoursInDay().get(j));
         }
 
-        CellReference crHalfMonthLine2 = new CellReference("W" + (row.getRowNum() + 2));
-        secondLineTotal.add(getCellValue(sheet.getRow(crHalfMonthLine2.getRow()).getCell(crHalfMonthLine2.getCol())));
+        CellReference cr2HalfMonth = new CellReference("W" + (row2.getRowNum() + 1));
+        Cell halfMonthCell2 = row2.createCell(cr2HalfMonth.getCol());
+        Double ahid = 0D;
+        for (int i = 0; i < 15; i++) {
+            if (Utils.isNumber(person.getAmountHoursInDay().get(i)))
+                ahid += Double.parseDouble(person.getAmountHoursInDay().get(i));
+        }
+        halfMonthCell2.setCellValue(ahid);
 
-        CellReference cr23 = new CellReference("Z" + (row.getRowNum() + 2));
-        CellReference cr24 = new CellReference("AO" + (row.getRowNum() + 2));
+        CellReference cr23 = new CellReference("Z" + (row2.getRowNum() + 1));
+        CellReference cr24 = new CellReference("AO" + (row2.getRowNum() + 1));
 
-        for (int i = cr23.getCol(), j = 0; i <= cr24.getCol(); i++, j++) {
-            firstLine.add(getCellValue(sheet.getRow(cr23.getRow()).getCell(cr23.getCol() + j)));
+        for (int i = cr23.getCol(), j = 15; i <= cr24.getCol(); i++, j++) {
+            Cell secondLineCell = row2.createCell(cr23.getCol() + (j - 15));
+            secondLineCell.setCellValue(person.getAmountHoursInDay().get(j));
         }
 
-        CellReference crTotalMonthLine2 = new CellReference("AP" + (row.getRowNum() + 2));
-        secondLineTotal.add(getCellValue(sheet.getRow(crTotalMonthLine2.getRow()).getCell(crTotalMonthLine2.getCol())));
-
+        CellReference crTotalMonthLine2 = new CellReference("AP" + (row2.getRowNum() + 1));
+        Cell totalMonthCell2 = row2.createCell(crTotalMonthLine2.getCol());
+        for (int i = 15; i < person.getAmountHoursInDay().size(); i++) {
+            if (Utils.isNumber(person.getAmountHoursInDay().get(i)))
+                ahid += Double.parseDouble(person.getAmountHoursInDay().get(i));
+        }
+        totalMonthCell2.setCellValue(ahid);
     }
 
-    public void addFooter() throws IOException {
-        Workbook headerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("header.xls"));
-        Workbook resultWorkBook = new HSSFWorkbook();
+    public void addFooter(Workbook resultWorkBook, Sheet resultSheet) throws IOException {
+        Workbook footerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("footer.xls"));
+        Sheet footerSheet = footerWorkbook.getSheetAt(0);
 
-        Sheet headerSheet = headerWorkbook.getSheetAt(0);
-        Sheet resultSheet = resultWorkBook.createSheet("Persons");
-
-        Iterator<Row> headerRows = headerSheet.rowIterator();
+        Iterator<Row> headerRows = footerSheet.rowIterator();
         while (headerRows.hasNext()) {
             Row headerRow = headerRows.next();
             Iterator<Cell> headerCells = headerRow.cellIterator();
-            Row resultRow = resultSheet.createRow(headerRow.getRowNum());
-//            resultRow.setRowStyle(headerRow.getRowStyle());
+            Row resultRow = resultSheet.createRow(headerRow.getRowNum() + shiftRow + 1);
+// resultRow.setRowStyle(headerRow.getRowStyle());
 
             while (headerCells.hasNext()) {
                 Cell headerCell = headerCells.next();
 
                 Cell resultCell = resultRow.createCell(headerCell.getColumnIndex());
                 setCell(headerCell, resultCell);
-//                resultCell.setCellStyle(headerCell.getCellStyle());
+// copyCellStyle(resultWorkBook, headerCell, resultCell);
+// resultCell.setCellStyle(headerCell.getCellStyle());
+                setCellStyle(resultWorkBook, headerCell, resultCell);
+                resultSheet.setColumnWidth(resultCell.getColumnIndex(), footerSheet.getColumnWidth(headerCell.getColumnIndex()));
+                resultSheet.setDefaultRowHeight(footerSheet.getDefaultRowHeight());
+// resultSheet.addMergedRegion(footerSheet.getMergedRegion(headerCell.getColumnIndex()));
+
             }
         }
-
-        resultWorkBook.write(new FileOutputStream("result.xls"));
     }
 
+    public void copyCellStyle(Workbook resultWorkBook, Cell oldCell, Cell newCell) {
+        CellStyle newCellStyle = resultWorkBook.createCellStyle();
+        newCellStyle.cloneStyleFrom(oldCell.getCellStyle());
+        newCell.setCellStyle(newCellStyle);
+    }
 
+    private void setCellStyle(Workbook resultWorkbook, Cell origCell, Cell newCell) {
+        CellStyle cellStyle = resultWorkbook.createCellStyle();
+//cellStyle.setFillBackgroundColor(IndexedColors.AQUA.getIndex());
+        cellStyle.setFillForegroundColor(origCell.getCellStyle().getFillForegroundColor());
+        cellStyle.setBottomBorderColor(origCell.getCellStyle().getBottomBorderColor());
+        cellStyle.setLeftBorderColor(origCell.getCellStyle().getLeftBorderColor());
+
+        cellStyle.setLocked(origCell.getCellStyle().getLocked());
+        cellStyle.setQuotePrefixed(origCell.getCellStyle().getQuotePrefixed());
+        cellStyle.setRightBorderColor(origCell.getCellStyle().getRightBorderColor());
+        cellStyle.setRotation(origCell.getCellStyle().getRotation());
+        cellStyle.setShrinkToFit(origCell.getCellStyle().getShrinkToFit());
+        cellStyle.setTopBorderColor(origCell.getCellStyle().getTopBorderColor());
+        cellStyle.setVerticalAlignment(origCell.getCellStyle().getVerticalAlignment());
+        cellStyle.setWrapText(origCell.getCellStyle().getWrapText());
+        cellStyle.setHidden(origCell.getCellStyle().getHidden());
+        cellStyle.setIndention(origCell.getCellStyle().getIndention());
+        cellStyle.setAlignment(origCell.getCellStyle().getAlignment());
+        cellStyle.setBorderBottom(origCell.getCellStyle().getBorderBottom());
+        cellStyle.setBorderLeft(origCell.getCellStyle().getBorderLeft());
+        cellStyle.setBorderRight(origCell.getCellStyle().getBorderRight());
+        cellStyle.setBorderTop(origCell.getCellStyle().getBorderTop());
+        cellStyle.setFillPattern(origCell.getCellStyle().getFillPattern());
+
+        newCell.setCellStyle(cellStyle);
+    }
+
+// public void copyRowStyle(Workbook resultWorkBook, Row oldCell, Row newCell) {
+// RowSty newCellStyle = resultWorkBook.createCellStyle();
+// newCellStyle.cloneStyleFrom(oldCell.getCellStyle());
+// newCell.setCellStyle(newCellStyle);
+// }
 
     public void setCell(Cell from, Cell to) {
         if (from.getCellType() == CellType.STRING)
@@ -174,7 +232,6 @@ public class ExcelService {
         else if (from.getCellType() == CellType.FORMULA)
             to.setCellValue(from.getCellFormula());
     }
-
 
     public List<Person> readPerson() throws IOException {
 
@@ -204,7 +261,6 @@ public class ExcelService {
             CellReference crProf = new CellReference("F" + currentRow.getRowNum());
             newPerson.profession(sheet.getRow(currentRow.getRowNum()).getCell(crProf.getCol()).getStringCellValue());
 
-
             Map<String, List<String>> map = readElementOfMonth(sheet, currentRow);
 
             System.out.println("----------------------------------------");
@@ -233,11 +289,12 @@ public class ExcelService {
         List<String> firstLineTotal = new ArrayList<>();
         List<String> secondLineTotal = new ArrayList<>();
 
-        //first line
+//first line
         CellReference cr11 = new CellReference("H" + (row.getRowNum() + 1));
         CellReference cr12 = new CellReference("V" + (row.getRowNum() + 1));
 
         for (int i = cr11.getCol(), j = 0; i <= cr12.getCol(); i++, j++) {
+
             firstLine.add(getCellValue(sheet.getRow(cr11.getRow()).getCell(cr11.getCol() + j)));
         }
 
@@ -254,8 +311,7 @@ public class ExcelService {
         CellReference crTotalMonth = new CellReference("AP" + (row.getRowNum() + 1));
         firstLineTotal.add(getCellValue(sheet.getRow(crTotalMonth.getRow()).getCell(crTotalMonth.getCol())));
 
-
-        //second line
+//second line
         CellReference cr21 = new CellReference("H" + (row.getRowNum() + 2));
         CellReference cr22 = new CellReference("V" + (row.getRowNum() + 2));
 
@@ -275,7 +331,6 @@ public class ExcelService {
 
         CellReference crTotalMonthLine2 = new CellReference("AP" + (row.getRowNum() + 2));
         secondLineTotal.add(getCellValue(sheet.getRow(crTotalMonthLine2.getRow()).getCell(crTotalMonthLine2.getCol())));
-
 
         Map<String, List<String>> result = new HashMap<>();
         result.put("firstLine", firstLine);

@@ -64,7 +64,7 @@ public class AppController {
 //            ex.printStackTrace();
 //        }
 
-        excelService.addHeader();
+        excelService.writeToExcel();
     }
 
 //    @FXML
