@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 import ru.stankin.practice.entity.Person;
 import ru.stankin.practice.utils.Utils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
@@ -22,13 +23,13 @@ public class ExcelService {
     private int shiftRow = 13;
 
     public void writeToExcel() throws IOException {
-        Workbook resultWorkBook = new HSSFWorkbook();
+        HSSFWorkbook resultWorkBook = new HSSFWorkbook();
         Sheet resultSheet = resultWorkBook.createSheet("Persons");
 
         addHeader(resultWorkBook, resultSheet);
-        addPersons(resultSheet);
+        addPersons(resultWorkBook, resultSheet);
         addFooter(resultWorkBook, resultSheet);
-        resultWorkBook.write(new FileOutputStream("result.xls"));
+        resultWorkBook.write( new FileOutputStream("result.xls"));
         resultWorkBook.close();
         shiftRow = 13;
     }
@@ -61,36 +62,56 @@ public class ExcelService {
         }
     }
 
-    public void addPersons(Sheet sheet) throws IOException {
+
+    public void addPersons(Workbook resultWorkbook, Sheet sheet) throws IOException {
         List<Person> persons = new ArrayList<>(personService.getPersons());
         for (int i = shiftRow + 1, j = 0; j < persons.size(); i += 2, j++) {
             Row row1 = sheet.createRow(i);
             Row row2 = sheet.createRow(i + 1);
-            setPersonOnRow(row1, row2, persons.get(j), j + 1);
+            setPersonOnRow(resultWorkbook, sheet, row1, row2, persons.get(j), j + 1);
         }
         shiftRow += (persons.size() * 2);
     }
 
-    public void setPersonOnRow(Row row, Row row2, Person person, int numPerson) {
+    public void setPersonOnRow(Workbook resultWorkbook, Sheet sheet, Row row, Row row2, Person person, int numPerson) {
+
         CellReference cr1 = new CellReference("A" + (row.getRowNum() + 1));
         Cell numCell = row.createCell(cr1.getCol());
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row2.getRowNum(), cr1.getCol(), cr1.getCol()));
         numCell.setCellValue(numPerson);
+        setStyleCellForPerson(resultWorkbook, numCell);
 
         CellReference cr2 = new CellReference("B" + (row.getRowNum() + 1));
         Cell dotCell = row.createCell(cr2.getCol());
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row2.getRowNum(), cr2.getCol(), cr2.getCol()));
         dotCell.setCellValue(".");
+        setStyleCellForPerson(resultWorkbook, dotCell);
 
         CellReference cr3 = new CellReference("C" + (row.getRowNum() + 1));
         Cell fioCell = row.createCell(cr3.getCol());
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row2.getRowNum(), cr3.getCol(), cr3.getCol()));
         fioCell.setCellValue(person.getSurname() + " " + person.getName() + " " + person.getMiddlename());
+        setStyleCellForPerson(resultWorkbook, fioCell);
+
+
 
         CellReference cr4 = new CellReference("D" + (row.getRowNum() + 1));
         Cell registrNumCell = row.createCell(cr4.getCol());
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row2.getRowNum(), cr4.getCol(), cr4.getCol() + 1));
         registrNumCell.setCellValue(person.getNumber());
+        setStyleCellForPerson(resultWorkbook, registrNumCell);
+
+
+
 
         CellReference cr5 = new CellReference("F" + (row.getRowNum() + 1));
         Cell proffessionCell = row.createCell(cr5.getCol());
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row2.getRowNum(), cr5.getCol(), cr5.getCol() + 1));
         proffessionCell.setCellValue(person.getProfession());
+        setStyleCellForPerson(resultWorkbook, proffessionCell);
+
+
+
 
         CellReference cr11 = new CellReference("H" + (row.getRowNum() + 1));
         CellReference cr12 = new CellReference("V" + (row.getRowNum() + 1));
@@ -98,15 +119,21 @@ public class ExcelService {
         for (int i = cr11.getCol(), j = 0; i <= cr12.getCol(); i++, j++) {
             Cell firstLineCell = row.createCell(cr11.getCol() + j);
             firstLineCell.setCellValue(person.getTypeDays().get(j));
+            setStyleCellForPerson(resultWorkbook, firstLineCell);
         }
 
         CellReference cr1HalfMonth = new CellReference("W" + (row.getRowNum() + 1));
         Cell halfMonthCell1 = row.createCell(cr1HalfMonth.getCol());
         int hmc = 0;
-        for (int i = 0; i < 15; i++) { if
-
-        (person.getTypeDays().get(i).equals("Ф")) hmc += 1; }
+        for (int i = 0; i < 15; i++) {
+            if (person.getTypeDays().get(i).equals("Ф")) hmc += 1;
+        }
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row.getRowNum(), cr1HalfMonth.getCol(), cr1HalfMonth.getCol() + 2));
         halfMonthCell1.setCellValue(hmc);
+        setStyleCellForPerson(resultWorkbook, halfMonthCell1);
+
+
+
 
         CellReference cr13 = new CellReference("Z" + (row.getRowNum() + 1));
         CellReference cr14 = new CellReference("AO" + (row.getRowNum() + 1));
@@ -114,12 +141,19 @@ public class ExcelService {
         for (int i = cr13.getCol(), j = 15; i <= cr14.getCol(); i++, j++) {
             Cell firstLineCell = row.createCell(cr13.getCol() + j - 15);
             firstLineCell.setCellValue(person.getTypeDays().get(j));
+            setStyleCellForPerson(resultWorkbook, firstLineCell);
+
         }
 
         CellReference cr1TotalMonth = new CellReference("AP" + (row.getRowNum() + 1));
         Cell totalMonthCell = row.createCell(cr1TotalMonth.getCol());
-        for (int i = 15; i < person.getTypeDays().size(); i++) { if (person.getTypeDays().get(i).equals("Ф")) hmc += 1; }
+        for (int i = 15; i < person.getTypeDays().size(); i++) {
+            if (person.getTypeDays().get(i).equals("Ф")) hmc += 1;
+        }
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row.getRowNum(), cr1TotalMonth.getCol(), cr1TotalMonth.getCol() + 2));
         totalMonthCell.setCellValue(hmc);
+        setStyleCellForPerson(resultWorkbook, totalMonthCell);
+
 
 //second line
         CellReference cr21 = new CellReference("H" + (row2.getRowNum() + 1));
@@ -128,6 +162,8 @@ public class ExcelService {
         for (int i = cr21.getCol(), j = 0; i <= cr22.getCol(); i++, j++) {
             Cell secondLineCell = row2.createCell(cr21.getCol() + j);
             secondLineCell.setCellValue(person.getAmountHoursInDay().get(j));
+            setStyleCellForPerson(resultWorkbook, secondLineCell);
+
         }
 
         CellReference cr2HalfMonth = new CellReference("W" + (row2.getRowNum() + 1));
@@ -137,7 +173,11 @@ public class ExcelService {
             if (Utils.isNumber(person.getAmountHoursInDay().get(i)))
                 ahid += Double.parseDouble(person.getAmountHoursInDay().get(i));
         }
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row2.getRowNum(), row2.getRowNum(), cr2HalfMonth.getCol(), cr2HalfMonth.getCol() + 2));
         halfMonthCell2.setCellValue(ahid);
+        setStyleCellForPerson(resultWorkbook, halfMonthCell2);
+
+
 
         CellReference cr23 = new CellReference("Z" + (row2.getRowNum() + 1));
         CellReference cr24 = new CellReference("AO" + (row2.getRowNum() + 1));
@@ -145,6 +185,7 @@ public class ExcelService {
         for (int i = cr23.getCol(), j = 15; i <= cr24.getCol(); i++, j++) {
             Cell secondLineCell = row2.createCell(cr23.getCol() + (j - 15));
             secondLineCell.setCellValue(person.getAmountHoursInDay().get(j));
+            setStyleCellForPerson(resultWorkbook, secondLineCell);
         }
 
         CellReference crTotalMonthLine2 = new CellReference("AP" + (row2.getRowNum() + 1));
@@ -153,7 +194,10 @@ public class ExcelService {
             if (Utils.isNumber(person.getAmountHoursInDay().get(i)))
                 ahid += Double.parseDouble(person.getAmountHoursInDay().get(i));
         }
+        sheet.addMergedRegionUnsafe(new CellRangeAddress(row2.getRowNum(), row2.getRowNum(), crTotalMonthLine2.getCol(), crTotalMonthLine2.getCol() + 2));
         totalMonthCell2.setCellValue(ahid);
+        setStyleCellForPerson(resultWorkbook, totalMonthCell2);
+
     }
 
     public void addFooter(Workbook resultWorkBook, Sheet resultSheet) throws IOException {
@@ -181,6 +225,27 @@ public class ExcelService {
 
             }
         }
+    }
+
+    public void setStyleCellForPerson(Workbook resultWorkBook, Cell cell) {
+        CellStyle newCellStyle = resultWorkBook.createCellStyle();
+//        newCellStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+//        newCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        newCellStyle.setBorderBottom(BorderStyle.THIN);
+        newCellStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        newCellStyle.setBorderLeft(BorderStyle.THIN);
+        newCellStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+        newCellStyle.setBorderTop(BorderStyle.THIN);
+        newCellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        newCellStyle.setBorderRight(BorderStyle.THIN);
+        newCellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+        Font font = resultWorkBook.createFont();
+        font.setCharSet(FontCharset.RUSSIAN.getValue());
+        newCellStyle.setFont(font);
+        newCellStyle.setAlignment(HorizontalAlignment.CENTER);
+        newCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+        cell.setCellStyle(newCellStyle);
     }
 
     public void copyCellStyle(Workbook resultWorkBook, Cell oldCell, Cell newCell) {
