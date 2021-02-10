@@ -4,16 +4,24 @@ package ru.stankin.practice.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.stankin.practice.entity.Person;
 import ru.stankin.practice.service.ExcelService;
 import ru.stankin.practice.service.PersonService;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 @Component
@@ -49,6 +57,8 @@ public class AppController {
     private TableColumn<String, Person> clmn4;
     @FXML
     private TableColumn<String, Person> clmn5;
+    @FXML
+    private List<ChoiceBox> daysList;
 
     @FXML
     public void testExcelClick() throws IOException {
@@ -86,8 +96,10 @@ public class AppController {
         showAction();
     }
 
-    /** Можно сделать вызов этого метода при старте приложения, тогда можно убрать кнопку, к которой он привязан.
-     * Он при всех изменениях и так автоматически вызывается**/
+    /**
+     * Можно сделать вызов этого метода при старте приложения, тогда можно убрать кнопку, к которой он привязан.
+     * Он при всех изменениях и так автоматически вызывается
+     **/
     @FXML
     public void showAction() {
         clmn1.setCellValueFactory(new PropertyValueFactory<String, Person>("surname"));
@@ -112,7 +124,11 @@ public class AppController {
 //                    protected void updateItem(Person item, boolean empty) {
 //                        super.updateItem(item, empty);
 //                        if (item != null) {
-//                            setTooltip(new Tooltip("information"));
+//                            Tooltip tooltip = new Tooltip();
+//                            String result = getInformation(item);
+//                            tooltip.setText(result);
+//                            tooltip.setFont(new Font(12));
+//                            setTooltip(tooltip);
 //                        }
 //                    }
 //                };
@@ -132,7 +148,7 @@ public class AppController {
             return row;
         });
 
-//        personsTable.refresh();
+        personsTable.refresh();
     }
 
     @FXML
@@ -148,4 +164,36 @@ public class AppController {
 
     }
 
+    private String getInformation(Person person) {
+        StringBuilder sb = new StringBuilder();
+
+        /** Дни месяца **/
+        sb.append("|");
+        for (int i = 0; i < person.getTypeDays().size(); i++) {
+            String day = String.format("%7d|", i + 1);
+            sb.append(day);
+        }
+        sb.append("\n");
+        /** Типы дней у работников **/
+        sb.append("|");
+        for (int i = 0; i < person.getTypeDays().size(); i++) {
+            String dayType = String.format("%7s|", person.getTypeDays().get(i));
+            sb.append(dayType);
+        }
+        sb.append("\n");
+        /** Часы **/
+        sb.append("|");
+        for (int i = 0; i < person.getAmountHoursInDay().size(); i++) {
+            String hours = String.format("%7s|", person.getAmountHoursInDay().get(i));
+            sb.append(hours);
+        }
+        return sb.toString();
+    }
+
+    @FXML
+    private void test() {
+        daysList.forEach(choiceBox -> {
+            choiceBox.ge
+        });
+    }
 }
