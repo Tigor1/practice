@@ -1,6 +1,7 @@
 package ru.stankin.practice.controller;
 
 
+import dnl.utils.text.table.TextTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,7 +21,9 @@ import ru.stankin.practice.entity.Person;
 import ru.stankin.practice.service.ExcelService;
 import ru.stankin.practice.service.PersonService;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.List;
 
@@ -115,38 +118,38 @@ public class AppController {
 
         ObservableList<Person> list = FXCollections.observableList(personsFromDb);
         personsTable.setItems(list);
-//
-//        personsTable.setRowFactory(new Callback<TableView<Person>, TableRow<Person>>() {
-//            @Override
-//            public TableRow<Person> call(TableView<Person> param) {
-//                return new TableRow<Person>() {
-//                    @Override
-//                    protected void updateItem(Person item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (item != null) {
-//                            Tooltip tooltip = new Tooltip();
-//                            String result = getInformation(item);
-//                            tooltip.setText(result);
-//                            tooltip.setFont(new Font(12));
-//                            setTooltip(tooltip);
-//                        }
-//                    }
-//                };
-//            }
-//        });
 
-        /** По двойному клику по элементу таблицы будет вызываться метод descriptionAction();
-         * Сверху закомментировано, что при наведении на элемент таблицы там выводится "information"**/
-        personsTable.setRowFactory(param -> {
-            TableRow<Person> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    Person rowData = row.getItem();
-                    descriptionAction(rowData);
-                }
-            });
-            return row;
+        personsTable.setRowFactory(new Callback<TableView<Person>, TableRow<Person>>() {
+            @Override
+            public TableRow<Person> call(TableView<Person> param) {
+                return new TableRow<Person>() {
+                    @Override
+                    protected void updateItem(Person item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            Tooltip tooltip = new Tooltip();
+                            String result = getInformation(item);
+                            tooltip.setText(result);
+                            tooltip.setFont(new Font(12));
+                            setTooltip(tooltip);
+                        }
+                    }
+                };
+            }
         });
+
+//        /** По двойному клику по элементу таблицы будет вызываться метод descriptionAction();
+//         * Сверху закомментировано, что при наведении на элемент таблицы там выводится "information"**/
+//        personsTable.setRowFactory(param -> {
+//            TableRow<Person> row = new TableRow<>();
+//            row.setOnMouseClicked(event -> {
+//                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+//                    Person rowData = row.getItem();
+//                    descriptionAction(rowData);
+//                }
+//            });
+//            return row;
+//        });
 
         personsTable.refresh();
     }
@@ -165,35 +168,25 @@ public class AppController {
     }
 
     private String getInformation(Person person) {
-        StringBuilder sb = new StringBuilder();
-
-        /** Дни месяца **/
-        sb.append("|");
+        String[][] days = new String[3][person.getTypeDays().size()];
         for (int i = 0; i < person.getTypeDays().size(); i++) {
-            String day = String.format("%7d|", i + 1);
-            sb.append(day);
+            days[0][i] = String.valueOf(i + 1);
         }
-        sb.append("\n");
-        /** Типы дней у работников **/
-        sb.append("|");
         for (int i = 0; i < person.getTypeDays().size(); i++) {
-            String dayType = String.format("%7s|", person.getTypeDays().get(i));
-            sb.append(dayType);
+            days[1][i] = person.getTypeDays().get(i);
         }
-        sb.append("\n");
-        /** Часы **/
-        sb.append("|");
         for (int i = 0; i < person.getAmountHoursInDay().size(); i++) {
-            String hours = String.format("%7s|", person.getAmountHoursInDay().get(i));
-            sb.append(hours);
+            days[2][i] = person.getAmountHoursInDay().get(i);
         }
-        return sb.toString();
+        TextTable textTable = new TextTable(person.getTypeDays().toArray(new String[0]), days);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(byteArrayOutputStream);
+        textTable.printTable(printStream, 0);
+        return byteArrayOutputStream.toString();
     }
 
     @FXML
     private void test() {
-        daysList.forEach(choiceBox -> {
-            choiceBox.ge
-        });
+
     }
 }
