@@ -18,6 +18,7 @@ import ru.stankin.practice.utils.Utils;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -60,7 +61,8 @@ public class AppController {
     @FXML
     private List<TextField> hoursList;
     @FXML
-    private Text text1;
+    private List<Text> textList;
+
 
 
 
@@ -270,8 +272,5 @@ public class AppController {
                 hoursList.get(i).setText("8");
             }
         }
-
-        text1.setText(Utils.getDayOfWeek(1));
-        text1.setFill(Color.RED);
     }
 }

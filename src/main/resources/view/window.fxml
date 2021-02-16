@@ -7,17 +7,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
 
+<?import javafx.scene.text.Text?>
 <?import java.util.ArrayList?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1163.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
     <children>
-        <TextField fx:id="name" layoutX="73.0" layoutY="80.0" promptText="Имя" />
-        <TextField fx:id="surname" layoutX="265.0" layoutY="80.0" promptText="Фамилия" />
+        <TextField fx:id="name" layoutX="265.0" layoutY="80.0" promptText="Имя" />
+        <TextField fx:id="surname" layoutX="73.0" layoutY="80.0" promptText="Фамилия" />
         <TextField fx:id="middlename" layoutX="457.0" layoutY="80.0" promptText="Отчество" />
         <TextField fx:id="profession" layoutX="649.0" layoutY="80.0" promptText="Должность" />
         <TextField fx:id="number" layoutX="841.0" layoutY="80.0" promptText="Учетный номер" />
-        <HBox layoutX="73.0" layoutY="121.0" prefHeight="38.0" prefWidth="694.0">
+        <HBox layoutX="73.0" layoutY="310.0" prefHeight="38.0" prefWidth="694.0" alignment="CENTER">
             <children>
                 <ChoiceBox fx:id="day1" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
                 <ChoiceBox fx:id="day2" layoutX="56.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
@@ -37,7 +37,7 @@
             </children>
         </HBox>
 
-        <HBox layoutX="73.0" layoutY="219.0" prefHeight="39.0" prefWidth="875.0">
+        <HBox layoutX="73.0" layoutY="410.0" prefHeight="39.0" prefWidth="742.0" alignment="CENTER">
             <children>
                 <ChoiceBox fx:id="day16" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
                 <ChoiceBox fx:id="day17" layoutX="56.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
@@ -94,7 +94,7 @@
             </ArrayList>
         </fx:define>
 
-        <HBox layoutX="73.0" layoutY="159.0" prefHeight="26.0" prefWidth="693.0">
+        <HBox layoutX="73.0" layoutY="350.0" prefHeight="26.0" prefWidth="693.0" alignment="CENTER">
             <children>
                 <TextField fx:id="hours1" prefHeight="26.0" prefWidth="46.0" />
                 <TextField fx:id="hours2" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
@@ -113,7 +113,7 @@
                 <TextField fx:id="hours15" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
             </children>
         </HBox>
-        <HBox layoutX="73.0" layoutY="258.0" prefHeight="26.0" prefWidth="738.0">
+        <HBox layoutX="73.0" layoutY="450.0" prefHeight="26.0" prefWidth="742.0" alignment="CENTER">
             <children>
                 <TextField fx:id="hours16" prefHeight="26.0" prefWidth="46.0" />
                 <TextField fx:id="hours17" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
@@ -170,20 +170,19 @@
             </ArrayList>
         </fx:define>
 
-        <Button fx:id="acceptBtn" layoutX="234.0" layoutY="347.0" mnemonicParsing="false" onAction="#acceptAction" text="Принять" />
-        <Button fx:id="showBtn" layoutX="333.0" layoutY="347.0" mnemonicParsing="false" onAction="#showAction" text="Отобразить" />
-        <Button fx:id="deleteBtn" layoutX="457.0" layoutY="347.0" mnemonicParsing="false" onAction="#deleteAction" text="Удалить" />
-        <Button fx:id="descriptionBtn" layoutX="520.0" layoutY="347.0" mnemonicParsing="false" onAction="#test" text="Test" />
-        <TableView fx:id="personsTable" layoutX="68.0" layoutY="392.0" prefHeight="200.0" prefWidth="1128.0">
+        <Button fx:id="acceptBtn" layoutX="233.0" layoutY="214.0" mnemonicParsing="false" onAction="#acceptAction" text="Принять" />
+        <Button fx:id="showBtn" layoutX="339.0" layoutY="214.0" mnemonicParsing="false" onAction="#showAction" text="Отобразить" />
+        <Button fx:id="deleteBtn" layoutX="460.0" layoutY="214.0" mnemonicParsing="false" onAction="#deleteAction" text="Удалить" />
+        <Button fx:id="descriptionBtn" layoutX="562.0" layoutY="214.0" mnemonicParsing="false" onAction="#test" text="Test" />
+        <TableView fx:id="personsTable" layoutY="513.0" prefHeight="200.0" prefWidth="1163.0">
             <columns>
-                <TableColumn fx:id="clmn1" prefWidth="197.6000213623047" text="Фамилия" />
-                <TableColumn fx:id="clmn2" prefWidth="172.0" text="Имя" />
-                <TableColumn fx:id="clmn3" prefWidth="239.199951171875" text="Отчество" />
-                <TableColumn fx:id="clmn4" prefWidth="207.99993896484375" text="Учетный номер" />
-                <TableColumn fx:id="clmn5" prefWidth="316.79998779296875" text="Профессия" />
+                <TableColumn fx:id="clmn1" prefWidth="240.79998475313187" text="Фамилия" />
+                <TableColumn fx:id="clmn2" prefWidth="190.3999786376953" text="Имя" />
+                <TableColumn fx:id="clmn3" prefWidth="245.5999755859375" text="Отчество" />
+                <TableColumn fx:id="clmn4" prefWidth="203.99993896484375" text="Учетный номер" />
+                <TableColumn fx:id="clmn5" prefWidth="279.99993896484375" text="Профессия" />
             </columns>
         </TableView>
-      <Button fx:id="excelBtn" layoutX="932.0" layoutY="303.0" mnemonicParsing="false" onAction="#testExcelClick" text="testExcel" />
-          <Text fx:id="text1" layoutX="83.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button fx:id="excelBtn" layoutX="692.0" layoutY="214.0" mnemonicParsing="false" onAction="#testExcelClick" text="testExcel" />
     </children>
 </AnchorPane>
