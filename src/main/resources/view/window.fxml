@@ -7,7 +7,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
+<?import java.util.ArrayList?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
     <children>
         <TextField fx:id="name" layoutX="73.0" layoutY="80.0" promptText="Имя" />
@@ -15,7 +17,7 @@
         <TextField fx:id="middlename" layoutX="457.0" layoutY="80.0" promptText="Отчество" />
         <TextField fx:id="profession" layoutX="649.0" layoutY="80.0" promptText="Должность" />
         <TextField fx:id="number" layoutX="841.0" layoutY="80.0" promptText="Учетный номер" />
-        <HBox layoutX="73.0" layoutY="120.0" prefHeight="39.0" prefWidth="693.0">
+        <HBox layoutX="73.0" layoutY="121.0" prefHeight="38.0" prefWidth="694.0">
             <children>
                 <ChoiceBox fx:id="day1" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
                 <ChoiceBox fx:id="day2" layoutX="56.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
@@ -55,6 +57,43 @@
                 <ChoiceBox fx:id="day31" layoutX="378.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
             </children>
         </HBox>
+
+        <fx:define>
+            <ArrayList fx:id="daysList">
+                <fx:reference source="day1" />
+                <fx:reference source="day2" />
+                <fx:reference source="day3" />
+                <fx:reference source="day4" />
+                <fx:reference source="day5" />
+                <fx:reference source="day6" />
+                <fx:reference source="day7" />
+                <fx:reference source="day8" />
+                <fx:reference source="day9" />
+                <fx:reference source="day10" />
+                <fx:reference source="day11" />
+                <fx:reference source="day12" />
+                <fx:reference source="day13" />
+                <fx:reference source="day14" />
+                <fx:reference source="day15" />
+                <fx:reference source="day16" />
+                <fx:reference source="day17" />
+                <fx:reference source="day18" />
+                <fx:reference source="day19" />
+                <fx:reference source="day20" />
+                <fx:reference source="day21" />
+                <fx:reference source="day22" />
+                <fx:reference source="day23" />
+                <fx:reference source="day24" />
+                <fx:reference source="day25" />
+                <fx:reference source="day26" />
+                <fx:reference source="day27" />
+                <fx:reference source="day28" />
+                <fx:reference source="day29" />
+                <fx:reference source="day30" />
+                <fx:reference source="day31" />
+            </ArrayList>
+        </fx:define>
+
         <HBox layoutX="73.0" layoutY="159.0" prefHeight="26.0" prefWidth="693.0">
             <children>
                 <TextField fx:id="hours1" prefHeight="26.0" prefWidth="46.0" />
@@ -94,10 +133,47 @@
                 <TextField fx:id="hours31" layoutX="654.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
             </children>
         </HBox>
+
+        <fx:define>
+            <ArrayList fx:id="hoursList">
+                <fx:reference source="hours1" />
+                <fx:reference source="hours2" />
+                <fx:reference source="hours3" />
+                <fx:reference source="hours4" />
+                <fx:reference source="hours5" />
+                <fx:reference source="hours6" />
+                <fx:reference source="hours7" />
+                <fx:reference source="hours8" />
+                <fx:reference source="hours9" />
+                <fx:reference source="hours10" />
+                <fx:reference source="hours11" />
+                <fx:reference source="hours12" />
+                <fx:reference source="hours13" />
+                <fx:reference source="hours14" />
+                <fx:reference source="hours15" />
+                <fx:reference source="hours16" />
+                <fx:reference source="hours17" />
+                <fx:reference source="hours18" />
+                <fx:reference source="hours19" />
+                <fx:reference source="hours20" />
+                <fx:reference source="hours21" />
+                <fx:reference source="hours22" />
+                <fx:reference source="hours23" />
+                <fx:reference source="hours24" />
+                <fx:reference source="hours25" />
+                <fx:reference source="hours26" />
+                <fx:reference source="hours27" />
+                <fx:reference source="hours28" />
+                <fx:reference source="hours29" />
+                <fx:reference source="hours30" />
+                <fx:reference source="hours31" />
+            </ArrayList>
+        </fx:define>
+
         <Button fx:id="acceptBtn" layoutX="234.0" layoutY="347.0" mnemonicParsing="false" onAction="#acceptAction" text="Принять" />
         <Button fx:id="showBtn" layoutX="333.0" layoutY="347.0" mnemonicParsing="false" onAction="#showAction" text="Отобразить" />
         <Button fx:id="deleteBtn" layoutX="457.0" layoutY="347.0" mnemonicParsing="false" onAction="#deleteAction" text="Удалить" />
-<!--        <Button fx:id="descriptionBtn" layoutX="520.0" layoutY="347.0" mnemonicParsing="false" onAction="#descriptionAction" text="Информация" />-->
+        <Button fx:id="descriptionBtn" layoutX="520.0" layoutY="347.0" mnemonicParsing="false" onAction="#test" text="Test" />
         <TableView fx:id="personsTable" layoutX="68.0" layoutY="392.0" prefHeight="200.0" prefWidth="1128.0">
             <columns>
                 <TableColumn fx:id="clmn1" prefWidth="197.6000213623047" text="Фамилия" />
@@ -108,5 +184,6 @@
             </columns>
         </TableView>
       <Button fx:id="excelBtn" layoutX="932.0" layoutY="303.0" mnemonicParsing="false" onAction="#testExcelClick" text="testExcel" />
+          <Text fx:id="text1" layoutX="83.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
     </children>
 </AnchorPane>
