@@ -38,4 +38,13 @@ public class PersonService {
     public void delete(long id) {
         personRepository.deleteById(id);
     }
+
+    public Person findByFio(String surname, String name, String middleName) {
+        return personRepository.findAll().stream()
+                .filter(person ->
+                        person.getSurname().equals(surname) &&
+                        person.getName().equals(name) &&
+                        person.getMiddlename().equals(middleName))
+                .findFirst().orElse(null);
+    }
 }
