@@ -41,9 +41,7 @@ public class AppController {
     @FXML
     public Button acceptBtn;
     @FXML
-    public Button showBtn;
-    @FXML
-    public Button descriptionBtn;
+    public Button clearBtn;
     @FXML
     public TableView<Person> personsTable;
     @FXML
@@ -64,7 +62,58 @@ public class AppController {
     private List<Text> textList;
 
 
+    public void init() {
+        //        Видимость полей в зависимости от кол-ва дней в текущем месяце
+        int daysInCurrentMonth = Utils.getDaysInCurrentMonth();
+        if (daysInCurrentMonth < 31) {
+            for (int i = Utils.getDaysInCurrentMonth(); i < daysList.size(); i++) {
+                daysList.get(i).setVisible(false);
+                hoursList.get(i).setVisible(false);
+            }
+        } else {
+            daysList.forEach(choiceBox -> choiceBox.setVisible(true));
+            hoursList.forEach(choiceBox -> choiceBox.setVisible(true));
+        }
+        daysList = daysList.stream().filter(ChoiceBox::isVisible).collect(Collectors.toList());
+        hoursList = hoursList.stream().filter(TextField::isVisible).collect(Collectors.toList());
 
+        daysList.forEach(choiceBox -> {
+            choiceBox.getItems().add("В");
+            choiceBox.getItems().add("Н");
+            choiceBox.getItems().add("Г");
+            choiceBox.getItems().add("О");
+            choiceBox.getItems().add("Б");
+            choiceBox.getItems().add("Р");
+            choiceBox.getItems().add("С");
+            choiceBox.getItems().add("П");
+            choiceBox.getItems().add("К");
+            choiceBox.getItems().add("А");
+            choiceBox.getItems().add("ВУ");
+            choiceBox.getItems().add("ОУ");
+            choiceBox.getItems().add("ЗН");
+            choiceBox.getItems().add("ЗП");
+            choiceBox.getItems().add("ЗС");
+            choiceBox.getItems().add("РП");
+            choiceBox.getItems().add("Ф");
+            choiceBox.getItems().add("Я");
+        });
+
+        Calendar calendar = new GregorianCalendar();
+        for (int i = 0; i < daysInCurrentMonth; i++) {
+            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
+            textList.get(i).setText((i + 1) + " - " + calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()));
+            /** if -> выходной, else -> рабочий**/
+            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                daysList.get(i).setValue("В");
+                hoursList.get(i).setText("0");
+                textList.get(i).setFill(Color.RED);
+            } else {
+                daysList.get(i).setValue("Р");
+                hoursList.get(i).setText("8");
+            }
+        }
+        showAction();
+    }
 
     @FXML
     public void testExcelClick() throws IOException {
@@ -114,7 +163,6 @@ public class AppController {
      * Можно сделать вызов этого метода при старте приложения, тогда можно убрать кнопку, к которой он привязан.
      * Он при всех изменениях и так автоматически вызывается
      **/
-    @FXML
     public void showAction() {
         clmn1.setCellValueFactory(new PropertyValueFactory<String, Person>("surname"));
         clmn2.setCellValueFactory(new PropertyValueFactory<String, Person>("name"));
@@ -130,27 +178,6 @@ public class AppController {
         ObservableList<Person> list = FXCollections.observableList(personsFromDb);
         personsTable.setItems(list);
 
-//        personsTable.setRowFactory(new Callback<TableView<Person>, TableRow<Person>>() {
-//            @Override
-//            public TableRow<Person> call(TableView<Person> param) {
-//                return new TableRow<Person>() {
-//                    @Override
-//                    protected void updateItem(Person item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (item != null) {
-//                            Tooltip tooltip = new Tooltip();
-//                            String result = getInformation(item);
-//                            tooltip.setText(result);
-//                            tooltip.setFont(new Font(12));
-//                            setTooltip(tooltip);
-//                        }
-//                    }
-//                };
-//            }
-//        });
-
-        /** По клику по элементу таблицы будет вызываться метод descriptionAction();
-         * Сверху закомментировано, что при наведении на элемент таблицы там выводится "information"**/
         personsTable.setRowFactory(param -> {
             TableRow<Person> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -186,91 +213,10 @@ public class AppController {
         }
     }
 
-//    private String getInformation(Person person) {
-//        int daysInCurrentMonth = Utils.getDaysInCurrentMonth();
-//        String[] columns = new String[5];
-//        String[][] days = new String[2][5];
-//
-//        for (int i = 0; i < 5; i++) {
-//            StringBuilder sb = new StringBuilder(String.valueOf(i + 1));
-//            if (i + 1 < 10) {
-//                sb.insert(0, "0");
-//            }
-//            String dayName = Utils.getDayOfWeek(i);
-//            sb.append(" - ");
-//            sb.append(dayName);
-//            Formatter formatter = new Formatter();
-//            columns[i] = formatter.format("%6s", sb.toString()).toString();
-////            columns[i] = sb.toString();
-//        }
-//
-//        for (int day = 0; day < 5; day++) {
-//            Formatter formatter = new Formatter();
-//            days[0][day] = formatter.format("%6s", person.getTypeDays().get(day)).toString();
-////            days[0][day] = person.getTypeDays().get(day);
-//        }
-//
-//        for (int hours = 0; hours < 5; hours++) {
-//            Formatter formatter = new Formatter();
-//            days[1][hours] = formatter.format("%6s", person.getAmountHoursInDay().get(hours)).toString();
-////            days[1][hours] = person.getAmountHoursInDay().get(hours);
-//        }
-//        TextTable textTable = new TextTable(columns, days);
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        PrintStream printStream = new PrintStream(byteArrayOutputStream);
-//        textTable.printTable(printStream, 0);
-//        return byteArrayOutputStream.toString();
-//    }
-
-    /** Сделаем так, чтобы эта вся дичь вызывалась при открытии окна, тогда будет збс **/
     @FXML
-    private void test() {
-//        Видимость полей в зависимости от кол-ва дней в текущем месяце
-        int daysInCurrentMonth = Utils.getDaysInCurrentMonth();
-        if (daysInCurrentMonth < 31) {
-            for (int i = Utils.getDaysInCurrentMonth(); i < daysList.size(); i++) {
-                daysList.get(i).setVisible(false);
-                hoursList.get(i).setVisible(false);
-            }
-        } else {
-            daysList.forEach(choiceBox -> choiceBox.setVisible(true));
-            hoursList.forEach(choiceBox -> choiceBox.setVisible(true));
-        }
-        daysList = daysList.stream().filter(ChoiceBox::isVisible).collect(Collectors.toList());
-        hoursList = hoursList.stream().filter(TextField::isVisible).collect(Collectors.toList());
-
-        daysList.forEach(choiceBox -> {
-            choiceBox.getItems().add("В");
-            choiceBox.getItems().add("Н");
-            choiceBox.getItems().add("Г");
-            choiceBox.getItems().add("О");
-            choiceBox.getItems().add("Б");
-            choiceBox.getItems().add("Р");
-            choiceBox.getItems().add("С");
-            choiceBox.getItems().add("П");
-            choiceBox.getItems().add("К");
-            choiceBox.getItems().add("А");
-            choiceBox.getItems().add("ВУ");
-            choiceBox.getItems().add("ОУ");
-            choiceBox.getItems().add("ЗН");
-            choiceBox.getItems().add("ЗП");
-            choiceBox.getItems().add("ЗС");
-            choiceBox.getItems().add("РП");
-            choiceBox.getItems().add("Ф");
-            choiceBox.getItems().add("Я");
-        });
-
-        Calendar calendar = new GregorianCalendar();
-        for (int i = 0; i < daysInCurrentMonth; i++) {
-            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
-            /** if -> выходной, else -> рабочий**/
-            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                daysList.get(i).setValue("В");
-                hoursList.get(i).setText("0");
-            } else {
-                daysList.get(i).setValue("Р");
-                hoursList.get(i).setText("8");
-            }
-        }
+    private void clearAction() {
+        personService.deleteAll();
+        showAction();
     }
+
 }

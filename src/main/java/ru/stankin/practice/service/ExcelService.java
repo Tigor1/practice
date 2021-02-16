@@ -25,19 +25,19 @@ public class ExcelService {
     private int shiftRow = 13;
 
     public void writeToExcel() throws IOException {
-        Workbook resultWorkBook = new XSSFWorkbook();
+        Workbook resultWorkBook = new HSSFWorkbook();
         Sheet resultSheet = resultWorkBook.createSheet("Persons");
 
         addHeader(resultWorkBook, resultSheet);
         addPersons(resultWorkBook, resultSheet);
         addFooter(resultWorkBook, resultSheet);
-        resultWorkBook.write( new FileOutputStream("result.xlsx"));
+        resultWorkBook.write( new FileOutputStream("result.xls"));
         resultWorkBook.close();
         shiftRow = 13;
     }
 
     public void addHeader(Workbook resultWorkBook, Sheet resultSheet) throws IOException {
-        Workbook headerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("header.xlsx"));
+        Workbook headerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("header.xls"));
         Sheet headerSheet = headerWorkbook.getSheetAt(0);
 
         Iterator<Row> headerRows = headerSheet.rowIterator();
@@ -204,7 +204,7 @@ public class ExcelService {
     }
 
     public void addFooter(Workbook resultWorkBook, Sheet resultSheet) throws IOException {
-        Workbook footerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("footer.xlsx"));
+        Workbook footerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("footer.xls"));
         Sheet footerSheet = footerWorkbook.getSheetAt(0);
 
         Iterator<Row> headerRows = footerSheet.rowIterator();

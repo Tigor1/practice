@@ -47,4 +47,8 @@ public class PersonService {
                         person.getMiddlename().equals(middleName))
                 .findFirst().orElse(null);
     }
+
+    public void deleteAll() {
+        personRepository.findAll().forEach(person -> delete(person.getId()));
+    }
 }

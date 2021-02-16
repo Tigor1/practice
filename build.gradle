@@ -45,8 +45,7 @@ dependencies {
 //   <------- Apache poi ------->
     compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0'
-    compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.2'
-    implementation group: 'com.massisframework', name: 'j-text-utils', version: '0.3.4'
+//    implementation group: 'com.massisframework', name: 'j-text-utils', version: '0.3.4'
 
 
 

@@ -10,6 +10,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import ru.stankin.practice.PracticeApp;
+import ru.stankin.practice.controller.AppController;
 
 import java.net.URL;
 
@@ -42,6 +43,7 @@ public class AccountantApp extends Application {
         primaryStage.setScene(scene);
         context.publishEvent(new StageReadyEvent(primaryStage));
         primaryStage.show();
+        context.getBean(AppController.class).init();
     }
 
     static class StageReadyEvent extends ApplicationEvent {
