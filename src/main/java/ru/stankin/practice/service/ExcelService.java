@@ -5,13 +5,14 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
 import org.springframework.stereotype.Service;
 import ru.stankin.practice.entity.Person;
 import ru.stankin.practice.utils.Utils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -23,19 +24,19 @@ public class ExcelService {
     private int shiftRow = 13;
 
     public void writeToExcel() throws IOException {
-        HSSFWorkbook resultWorkBook = new HSSFWorkbook();
+        Workbook resultWorkBook = new XSSFWorkbook();
         Sheet resultSheet = resultWorkBook.createSheet("Persons");
 
         addHeader(resultWorkBook, resultSheet);
         addPersons(resultWorkBook, resultSheet);
         addFooter(resultWorkBook, resultSheet);
-        resultWorkBook.write( new FileOutputStream("result.xls"));
+        resultWorkBook.write( new FileOutputStream("result.xlsx"));
         resultWorkBook.close();
         shiftRow = 13;
     }
 
     public void addHeader(Workbook resultWorkBook, Sheet resultSheet) throws IOException {
-        Workbook headerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("header.xls"));
+        Workbook headerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("header.xlsx"));
         Sheet headerSheet = headerWorkbook.getSheetAt(0);
 
         Iterator<Row> headerRows = headerSheet.rowIterator();
@@ -90,7 +91,8 @@ public class ExcelService {
         CellReference cr3 = new CellReference("C" + (row.getRowNum() + 1));
         Cell fioCell = row.createCell(cr3.getCol());
         sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row2.getRowNum(), cr3.getCol(), cr3.getCol()));
-        fioCell.setCellValue(person.getSurname() + " " + person.getName() + " " + person.getMiddlename());
+        String fio = person.getSurname() + " " + person.getName() + " " + person.getMiddlename();
+        fioCell.setCellValue(new String(fio.getBytes(), Charset.forName("WINDOWS-1251")));
         setStyleCellForPerson(resultWorkbook, fioCell);
 
 
@@ -201,7 +203,7 @@ public class ExcelService {
     }
 
     public void addFooter(Workbook resultWorkBook, Sheet resultSheet) throws IOException {
-        Workbook footerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("footer.xls"));
+        Workbook footerWorkbook = WorkbookFactory.create(getClass().getClassLoader().getResourceAsStream("footer.xlsx"));
         Sheet footerSheet = footerWorkbook.getSheetAt(0);
 
         Iterator<Row> headerRows = footerSheet.rowIterator();
@@ -240,9 +242,9 @@ public class ExcelService {
         newCellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
         newCellStyle.setBorderRight(BorderStyle.THIN);
         newCellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-        Font font = resultWorkBook.createFont();
-        font.setCharSet(FontCharset.RUSSIAN.getValue());
-        newCellStyle.setFont(font);
+//        Font font = resultWorkBook.createFont();
+//        font.setCharSet(FontCharset.RUSSIAN.getValue());
+//        newCellStyle.setFont(font);
         newCellStyle.setAlignment(HorizontalAlignment.CENTER);
         newCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         cell.setCellStyle(newCellStyle);
