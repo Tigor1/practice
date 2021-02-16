@@ -141,7 +141,7 @@ public class ExcelService {
         CellReference cr13 = new CellReference("Z" + (row.getRowNum() + 1));
         CellReference cr14 = new CellReference("AO" + (row.getRowNum() + 1));
 
-        for (int i = cr13.getCol(), j = 15; i <= cr14.getCol(); i++, j++) {
+        for (int j = 15; j < LocalDate.now().lengthOfMonth(); j++) {
             Cell firstLineCell = row.createCell(cr13.getCol() + j - 15);
             firstLineCell.setCellValue(person.getTypeDays().get(j));
             setStyleCellForPerson(resultWorkbook, firstLineCell);
@@ -150,7 +150,7 @@ public class ExcelService {
 
         CellReference cr1TotalMonth = new CellReference("AP" + (row.getRowNum() + 1));
         Cell totalMonthCell = row.createCell(cr1TotalMonth.getCol());
-        for (int i = 15; i < LocalDate.now().lengthOfMonth(); i++) {
+        for (int i = 15; i < person.getTypeDays().size(); i++) {
             if (person.getTypeDays().get(i).equals("Ф")) hmc += 1;
         }
         sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row.getRowNum(), cr1TotalMonth.getCol(), cr1TotalMonth.getCol() + 2));
@@ -185,7 +185,7 @@ public class ExcelService {
         CellReference cr23 = new CellReference("Z" + (row2.getRowNum() + 1));
         CellReference cr24 = new CellReference("AO" + (row2.getRowNum() + 1));
 
-        for (int i = cr23.getCol(), j = 15; i <= cr24.getCol(); i++, j++) {
+        for (int j = 15; j < LocalDate.now().lengthOfMonth(); j++) {
             Cell secondLineCell = row2.createCell(cr23.getCol() + (j - 15));
             secondLineCell.setCellValue(person.getAmountHoursInDay().get(j));
             setStyleCellForPerson(resultWorkbook, secondLineCell);
