@@ -5,6 +5,13 @@ plugins {
     id 'java'
 }
 
+sourceCompatibility = 1.11
+compileJava.options.encoding = 'utf-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'utf-8'
+}
+
 javafx {
     version = "15.0.1"
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
@@ -44,6 +51,7 @@ dependencies {
 
 
 }
+
 
 test {
     useJUnitPlatform()

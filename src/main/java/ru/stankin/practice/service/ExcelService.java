@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -149,7 +150,7 @@ public class ExcelService {
 
         CellReference cr1TotalMonth = new CellReference("AP" + (row.getRowNum() + 1));
         Cell totalMonthCell = row.createCell(cr1TotalMonth.getCol());
-        for (int i = 15; i < person.getTypeDays().size(); i++) {
+        for (int i = 15; i < LocalDate.now().lengthOfMonth(); i++) {
             if (person.getTypeDays().get(i).equals("Ф")) hmc += 1;
         }
         sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row.getRowNum(), cr1TotalMonth.getCol(), cr1TotalMonth.getCol() + 2));
