@@ -93,7 +93,7 @@ public class ExcelService {
         Cell fioCell = row.createCell(cr3.getCol());
         sheet.addMergedRegionUnsafe(new CellRangeAddress(row.getRowNum(), row2.getRowNum(), cr3.getCol(), cr3.getCol()));
         String fio = person.getSurname() + " " + person.getName() + " " + person.getMiddlename();
-        fioCell.setCellValue(new String(fio.getBytes(), Charset.forName("WINDOWS-1251")));
+        fioCell.setCellValue(new String(fio.getBytes(), StandardCharsets.UTF_8));
         setStyleCellForPerson(resultWorkbook, fioCell);
 
 
