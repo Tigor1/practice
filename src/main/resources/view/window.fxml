@@ -12,8 +12,8 @@
 <?import java.util.ArrayList?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1163.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
     <children>
-        <TextField fx:id="name" layoutX="250.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Имя" />
         <TextField fx:id="surname" layoutX="50.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Фамилия" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="945.0" />
+        <TextField fx:id="name" layoutX="250.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Имя" />
         <TextField fx:id="middlename" layoutX="450.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Отчество" />
         <TextField fx:id="profession" layoutX="650.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Должность" />
         <TextField fx:id="number" layoutX="850.0" layoutY="84.0" prefHeight="38.0" prefWidth="162.0" promptText="Учетный номер" AnchorPane.leftAnchor="846.0" AnchorPane.rightAnchor="155.0" />
