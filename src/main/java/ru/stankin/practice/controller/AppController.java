@@ -55,63 +55,11 @@ public class AppController {
     @FXML
     private TableColumn<String, Person> clmn5;
     @FXML
-    private List<ChoiceBox> daysList;
-    @FXML
-    private List<TextField> hoursList;
-    @FXML
     private List<Text> textList;
 
 
     public void init() {
         //        Видимость полей в зависимости от кол-ва дней в текущем месяце
-        int daysInCurrentMonth = Utils.getDaysInCurrentMonth();
-        if (daysInCurrentMonth < 31) {
-            for (int i = Utils.getDaysInCurrentMonth(); i < daysList.size(); i++) {
-                daysList.get(i).setVisible(false);
-                hoursList.get(i).setVisible(false);
-            }
-        } else {
-            daysList.forEach(choiceBox -> choiceBox.setVisible(true));
-            hoursList.forEach(choiceBox -> choiceBox.setVisible(true));
-        }
-        daysList = daysList.stream().filter(ChoiceBox::isVisible).collect(Collectors.toList());
-        hoursList = hoursList.stream().filter(TextField::isVisible).collect(Collectors.toList());
-
-        daysList.forEach(choiceBox -> {
-            choiceBox.getItems().add("В");
-            choiceBox.getItems().add("Н");
-            choiceBox.getItems().add("Г");
-            choiceBox.getItems().add("О");
-            choiceBox.getItems().add("Б");
-            choiceBox.getItems().add("Р");
-            choiceBox.getItems().add("С");
-            choiceBox.getItems().add("П");
-            choiceBox.getItems().add("К");
-            choiceBox.getItems().add("А");
-            choiceBox.getItems().add("ВУ");
-            choiceBox.getItems().add("ОУ");
-            choiceBox.getItems().add("ЗН");
-            choiceBox.getItems().add("ЗП");
-            choiceBox.getItems().add("ЗС");
-            choiceBox.getItems().add("РП");
-            choiceBox.getItems().add("Ф");
-            choiceBox.getItems().add("Я");
-        });
-
-        Calendar calendar = new GregorianCalendar();
-        for (int i = 0; i < daysInCurrentMonth; i++) {
-            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
-            textList.get(i).setText((i + 1) + " - " + calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()));
-            /** if -> выходной, else -> рабочий**/
-            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                daysList.get(i).setValue("В");
-                hoursList.get(i).setText("0");
-                textList.get(i).setFill(Color.RED);
-            } else {
-                daysList.get(i).setValue("Р");
-                hoursList.get(i).setText("8");
-            }
-        }
         showAction();
     }
 
@@ -150,10 +98,8 @@ public class AppController {
                     .build();
         }
         List<String> typeDays = new ArrayList<>();
-        daysList.forEach(choiceBox -> typeDays.add(choiceBox.getValue().toString()));
         person.setTypeDays(typeDays);
         List<String> amountHoursInDays = new ArrayList<>();
-        hoursList.forEach(textField -> amountHoursInDays.add(textField.getText()));
         person.setAmountHoursInDay(amountHoursInDays);
         personService.save(person);
         showAction();
@@ -207,10 +153,6 @@ public class AppController {
         surname.setText(person.getSurname());
         profession.setText(person.getProfession());
         number.setText(person.getNumber());
-        for (int i = 0; i < daysList.size() && i < person.getTypeDays().size() && i < person.getAmountHoursInDay().size(); i++) {
-            daysList.get(i).setValue(person.getTypeDays().get(i));
-            hoursList.get(i).setText(person.getAmountHoursInDay().get(i));
-        }
     }
 
     @FXML

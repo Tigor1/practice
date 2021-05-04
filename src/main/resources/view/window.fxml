@@ -1,261 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
 
-<?import java.util.ArrayList?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1163.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
     <children>
-        <TextField fx:id="surname" layoutX="50.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Фамилия" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="945.0" />
-        <TextField fx:id="name" layoutX="250.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Имя" />
-        <TextField fx:id="middlename" layoutX="450.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Отчество" />
-        <TextField fx:id="profession" layoutX="650.0" layoutY="83.0" prefHeight="38.0" prefWidth="162.0" promptText="Должность" />
-        <TextField fx:id="number" layoutX="850.0" layoutY="84.0" prefHeight="38.0" prefWidth="162.0" promptText="Учетный номер" AnchorPane.leftAnchor="846.0" AnchorPane.rightAnchor="155.0" />
-        <HBox alignment="CENTER" layoutX="185.0" layoutY="150.0" prefHeight="38.0" prefWidth="694.0" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="284.0">
-            <children>
-                <ChoiceBox fx:id="day1" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day2" layoutX="56.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day3" layoutX="102.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day4" layoutX="102.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day5" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day6" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day7" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day8" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day9" layoutX="194.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day10" layoutX="240.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day11" layoutX="286.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day12" layoutX="286.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day13" layoutX="194.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day14" layoutX="332.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day15" layoutX="378.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-            </children>
-        </HBox>
+        <TextField fx:id="surname" layoutX="34.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Фамилия" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="929.0" />
+        <TextField fx:id="name" layoutX="253.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Имя" />
+        <TextField fx:id="middlename" layoutX="474.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Отчество" />
+        <TextField fx:id="profession" layoutX="693.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Должность" />
+        <TextField fx:id="number" layoutX="913.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Учетный номер" AnchorPane.leftAnchor="913.0" AnchorPane.rightAnchor="50.0" />
 
-        <HBox alignment="CENTER" layoutX="185.0" layoutY="240.0" prefHeight="39.0" prefWidth="742.0">
-            <children>
-                <ChoiceBox fx:id="day16" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day17" layoutX="56.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day18" layoutX="102.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day19" layoutX="102.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day20" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day21" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day22" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day23" layoutX="148.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day24" layoutX="194.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day25" layoutX="240.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day26" layoutX="286.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day27" layoutX="286.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day28" layoutX="194.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day29" layoutX="332.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day30" layoutX="378.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-                <ChoiceBox fx:id="day31" layoutX="378.0" layoutY="10.0" prefHeight="37.0" prefWidth="46.0" />
-            </children>
-        </HBox>
-
-        <fx:define>
-            <ArrayList fx:id="daysList">
-                <fx:reference source="day1" />
-                <fx:reference source="day2" />
-                <fx:reference source="day3" />
-                <fx:reference source="day4" />
-                <fx:reference source="day5" />
-                <fx:reference source="day6" />
-                <fx:reference source="day7" />
-                <fx:reference source="day8" />
-                <fx:reference source="day9" />
-                <fx:reference source="day10" />
-                <fx:reference source="day11" />
-                <fx:reference source="day12" />
-                <fx:reference source="day13" />
-                <fx:reference source="day14" />
-                <fx:reference source="day15" />
-                <fx:reference source="day16" />
-                <fx:reference source="day17" />
-                <fx:reference source="day18" />
-                <fx:reference source="day19" />
-                <fx:reference source="day20" />
-                <fx:reference source="day21" />
-                <fx:reference source="day22" />
-                <fx:reference source="day23" />
-                <fx:reference source="day24" />
-                <fx:reference source="day25" />
-                <fx:reference source="day26" />
-                <fx:reference source="day27" />
-                <fx:reference source="day28" />
-                <fx:reference source="day29" />
-                <fx:reference source="day30" />
-                <fx:reference source="day31" />
-            </ArrayList>
-        </fx:define>
-
-        <HBox alignment="CENTER" layoutX="185.0" layoutY="189.0" prefHeight="26.0" prefWidth="693.0">
-            <children>
-                <TextField fx:id="hours1" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours2" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours3" layoutX="56.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours4" layoutX="56.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours5" layoutX="56.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours6" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours7" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours8" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours9" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours10" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours11" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours12" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours13" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours14" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours15" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-            </children>
-        </HBox>
-        <HBox alignment="CENTER" layoutX="185.0" layoutY="279.0" prefHeight="26.0" prefWidth="742.0">
-            <children>
-                <TextField fx:id="hours16" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours17" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours18" layoutX="56.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours19" layoutX="56.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours20" layoutX="56.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours21" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours22" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours23" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours24" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours25" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours26" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours27" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours28" layoutX="102.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours29" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours30" layoutX="148.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-                <TextField fx:id="hours31" layoutX="654.0" layoutY="10.0" prefHeight="26.0" prefWidth="46.0" />
-            </children>
-        </HBox>
-
-        <fx:define>
-            <ArrayList fx:id="hoursList">
-                <fx:reference source="hours1" />
-                <fx:reference source="hours2" />
-                <fx:reference source="hours3" />
-                <fx:reference source="hours4" />
-                <fx:reference source="hours5" />
-                <fx:reference source="hours6" />
-                <fx:reference source="hours7" />
-                <fx:reference source="hours8" />
-                <fx:reference source="hours9" />
-                <fx:reference source="hours10" />
-                <fx:reference source="hours11" />
-                <fx:reference source="hours12" />
-                <fx:reference source="hours13" />
-                <fx:reference source="hours14" />
-                <fx:reference source="hours15" />
-                <fx:reference source="hours16" />
-                <fx:reference source="hours17" />
-                <fx:reference source="hours18" />
-                <fx:reference source="hours19" />
-                <fx:reference source="hours20" />
-                <fx:reference source="hours21" />
-                <fx:reference source="hours22" />
-                <fx:reference source="hours23" />
-                <fx:reference source="hours24" />
-                <fx:reference source="hours25" />
-                <fx:reference source="hours26" />
-                <fx:reference source="hours27" />
-                <fx:reference source="hours28" />
-                <fx:reference source="hours29" />
-                <fx:reference source="hours30" />
-                <fx:reference source="hours31" />
-            </ArrayList>
-        </fx:define>
-
-        <Button fx:id="acceptBtn" layoutX="185.0" layoutY="327.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="39.0" prefWidth="200.0" text="Сохранить" textAlignment="CENTER" textFill="#448a52" />
-        <Button fx:id="clearBtn" layoutX="824.0" layoutY="327.0" mnemonicParsing="false" onAction="#clearAction" prefHeight="39.0" prefWidth="162.0" style="-fx-background-color: ef476f;" text="Очистить базу" textAlignment="CENTER" textFill="WHITE" />
-        <Button fx:id="deleteBtn" layoutX="400.0" layoutY="327.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="39.0" prefWidth="200.0" text="Удалить" textAlignment="CENTER" textFill="#d02f2f" />
-        <TableView fx:id="personsTable" layoutY="389.0" prefHeight="331.0" prefWidth="1163.0">
+              <Button fx:id="acceptBtn" layoutX="135.0" layoutY="108.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="39.0" prefWidth="200.0" text="Сохранить" textAlignment="CENTER" textFill="#448a52" />
+        <Button fx:id="clearBtn" layoutX="793.0" layoutY="108.0" mnemonicParsing="false" onAction="#clearAction" prefHeight="39.0" prefWidth="200.0" style="-fx-background-color: ef476f;" text="Очистить базу" textAlignment="CENTER" textFill="WHITE" />
+        <Button fx:id="deleteBtn" layoutX="474.0" layoutY="108.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="39.0" prefWidth="200.0" text="Удалить" textAlignment="CENTER" textFill="#d02f2f" />
+        <TableView fx:id="personsTable" layoutY="179.0" prefHeight="237.0" prefWidth="1163.0">
             <columns>
-                <TableColumn fx:id="clmn1" prefWidth="240.79998475313187" text="Фамилия" />
-                <TableColumn fx:id="clmn2" prefWidth="190.3999786376953" text="Имя" />
-                <TableColumn fx:id="clmn3" prefWidth="245.5999755859375" text="Отчество" />
-                <TableColumn fx:id="clmn4" prefWidth="203.99993896484375" text="Учетный номер" />
-                <TableColumn fx:id="clmn5" prefWidth="279.99993896484375" text="Профессия" />
+                <TableColumn fx:id="clmn1" prefWidth="221.0" text="Фамилия" />
+                <TableColumn fx:id="clmn2" prefWidth="238.0" text="Имя" />
+                <TableColumn fx:id="clmn3" prefWidth="228.0" text="Отчество" />
+                <TableColumn fx:id="clmn4" prefWidth="250.0" text="Учетный номер" />
+                <TableColumn fx:id="clmn5" prefWidth="225.0" text="Профессия" />
             </columns>
         </TableView>
-      <Button fx:id="excelBtn" layoutX="612.0" layoutY="327.0" mnemonicParsing="false" onAction="#testExcelClick" prefHeight="39.0" prefWidth="200.0" text="Выгрузить в excel" textAlignment="CENTER" />
-      <HBox layoutX="185.0" layoutY="134.0" prefHeight="19.0" prefWidth="694.0">
-         <children>
-            <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text5" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text6" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text7" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text8" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text9" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text10" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text11" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text12" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text13" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text14" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            <Text fx:id="text15" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-         </children>
-      </HBox>
-        <HBox layoutX="185.0" layoutY="221.0" prefHeight="19.0" prefWidth="694.0">
-            <children>
-                <Text fx:id="text16" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text17" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text18" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text19" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text20" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text21" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text22" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text23" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text24" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text25" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text26" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text27" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text28" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text29" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text30" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-                <Text fx:id="text31" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="45.13671875" />
-            </children>
-        </HBox>
-        <fx:define>
-            <ArrayList fx:id="textList">
-                <fx:reference source="text1"/>
-                <fx:reference source="text2"/>
-                <fx:reference source="text3"/>
-                <fx:reference source="text4"/>
-                <fx:reference source="text5"/>
-                <fx:reference source="text6"/>
-                <fx:reference source="text7"/>
-                <fx:reference source="text8"/>
-                <fx:reference source="text9"/>
-                <fx:reference source="text10"/>
-                <fx:reference source="text11"/>
-                <fx:reference source="text12"/>
-                <fx:reference source="text13"/>
-                <fx:reference source="text14"/>
-                <fx:reference source="text15"/>
-                <fx:reference source="text16"/>
-                <fx:reference source="text17"/>
-                <fx:reference source="text18"/>
-                <fx:reference source="text19"/>
-                <fx:reference source="text20"/>
-                <fx:reference source="text21"/>
-                <fx:reference source="text22"/>
-                <fx:reference source="text23"/>
-                <fx:reference source="text24"/>
-                <fx:reference source="text25"/>
-                <fx:reference source="text26"/>
-                <fx:reference source="text27"/>
-                <fx:reference source="text28"/>
-                <fx:reference source="text29"/>
-                <fx:reference source="text30"/>
-                <fx:reference source="text31"/>
-            </ArrayList>
-        </fx:define>
     </children>
 </AnchorPane>
