@@ -5,25 +5,50 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="1164.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.stankin.practice.controller.AppController">
     <children>
-        <TextField fx:id="surname" layoutX="34.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Фамилия" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="929.0" />
-        <TextField fx:id="name" layoutX="253.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Имя" />
-        <TextField fx:id="middlename" layoutX="474.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Отчество" />
-        <TextField fx:id="profession" layoutX="693.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Должность" />
-        <TextField fx:id="number" layoutX="913.0" layoutY="45.0" prefHeight="38.0" prefWidth="200.0" promptText="Учетный номер" AnchorPane.leftAnchor="913.0" AnchorPane.rightAnchor="50.0" />
+        <TextField fx:id="surname" layoutX="148.0" layoutY="45.0" prefHeight="38.0" prefWidth="201.0" promptText="Марка машины" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="681.0">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></TextField>
+        <TextField fx:id="name" layoutX="148.0" layoutY="92.0" prefHeight="38.0" prefWidth="201.0" promptText="Модель">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></TextField>
+        <TextField fx:id="middlename" layoutX="149.0" layoutY="137.0" prefHeight="38.0" prefWidth="200.0" promptText="Тип">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></TextField>
+        <TextField fx:id="profession" layoutX="625.0" layoutY="118.0" prefHeight="38.0" prefWidth="200.0" promptText="Цвет">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></TextField>
+        <TextField fx:id="number" layoutX="625.0" layoutY="73.0" prefHeight="38.0" prefWidth="200.0" promptText="Регистрационный номер" AnchorPane.leftAnchor="625.0" AnchorPane.rightAnchor="205.0">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></TextField>
 
-              <Button fx:id="acceptBtn" layoutX="135.0" layoutY="108.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="39.0" prefWidth="200.0" text="Сохранить" textAlignment="CENTER" textFill="#448a52" />
-        <Button fx:id="clearBtn" layoutX="793.0" layoutY="108.0" mnemonicParsing="false" onAction="#clearAction" prefHeight="39.0" prefWidth="200.0" style="-fx-background-color: ef476f;" text="Очистить базу" textAlignment="CENTER" textFill="WHITE" />
-        <Button fx:id="deleteBtn" layoutX="474.0" layoutY="108.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="39.0" prefWidth="200.0" text="Удалить" textAlignment="CENTER" textFill="#d02f2f" />
-        <TableView fx:id="personsTable" layoutY="179.0" prefHeight="237.0" prefWidth="1163.0">
+              <Button fx:id="acceptBtn" layoutX="284.0" layoutY="211.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="39.0" prefWidth="200.0" text="Сохранить" textAlignment="CENTER" textFill="#1b4023">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></Button>
+        <Button fx:id="clearBtn" layoutX="492.0" layoutY="231.0" mnemonicParsing="false" onAction="#clearAction" prefHeight="39.0" prefWidth="200.0" text="Очистить базу" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></Button>
+        <Button fx:id="deleteBtn" layoutX="284.0" layoutY="254.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="39.0" prefWidth="200.0" text="Удалить" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font></Button>
+        <TableView fx:id="personsTable" layoutY="309.0" prefHeight="278.0" prefWidth="1030.0">
             <columns>
-                <TableColumn fx:id="clmn1" prefWidth="221.0" text="Фамилия" />
-                <TableColumn fx:id="clmn2" prefWidth="238.0" text="Имя" />
-                <TableColumn fx:id="clmn3" prefWidth="228.0" text="Отчество" />
-                <TableColumn fx:id="clmn4" prefWidth="250.0" text="Учетный номер" />
-                <TableColumn fx:id="clmn5" prefWidth="225.0" text="Профессия" />
+                <TableColumn fx:id="clmn1" prefWidth="217.0" text="Марка машины" />
+                <TableColumn fx:id="clmn2" prefWidth="224.0" text="Модель" />
+                <TableColumn fx:id="clmn3" prefWidth="213.0" text="Тип" />
+                <TableColumn fx:id="clmn4" prefWidth="191.0" text="Регистрационной номер" />
+                <TableColumn fx:id="clmn5" prefWidth="184.0" text="Цвет" />
             </columns>
         </TableView>
     </children>
