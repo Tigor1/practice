@@ -33,6 +33,7 @@ repositories {
 
 dependencies {
     runtimeOnly 'com.h2database:h2'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
@@ -45,12 +46,14 @@ dependencies {
 //   <------- Apache poi ------->
     compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.2'
+    compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '5.0.0'
+    compile group: 'org.apache.poi', name: 'poi-excelant', version: '5.0.0'
 //    implementation group: 'com.massisframework', name: 'j-text-utils', version: '0.3.4'
 
 
 
 }
-
 
 test {
     useJUnitPlatform()
