@@ -10,8 +10,8 @@ spring:
     driver-class-name: org.h2.Driver
     username: igor
     password: admin
-#    url: jdbc:h2:file:C:\Users\igorl\IdeaProjects\practice\db\practice
-    url: jdbc:h2:mem:practiceDB
+    url: jdbc:h2:file:~/db/practice
+#    url: jdbc:h2:mem:practiceDB
 #    platform: org.hibernate.dialect.H2Dialect
   h2:
     console:
